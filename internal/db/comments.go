@@ -35,6 +35,11 @@ func (d *Database) GetComment(ctx context.Context, uuid string) (comment.Comment
 	)
 
 	err := row.Scan(&cmtRow.ID, &cmtRow.Slug, &cmtRow.Body, &cmtRow.Author)
+
+	if err == sql.ErrNoRows {
+		return comment.Comment{}, fmt.Errorf("comment not found")
+	}
+
 	if err != nil {
 		return comment.Comment{}, fmt.Errorf("error fetch in  the comment by uuid: %w", err)
 	}

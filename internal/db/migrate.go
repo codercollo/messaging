@@ -34,7 +34,7 @@ func (d *Database) MigrateDB() error {
 		}
 
 	}
-	fmt.Println("successfully migrated the databse")
+	fmt.Println("successfully migrated the database")
 
 	return nil
 }
