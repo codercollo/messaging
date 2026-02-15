@@ -28,10 +28,10 @@ func convertCommentRowtoComment(c CommentRow) comment.Comment {
 func (d *Database) GetComment(ctx context.Context, uuid string) (comment.Comment, error) {
 	var cmtRow CommentRow
 
-	_, err := d.Client.ExecContext(ctx, "SELECT pg_sleep(16)")
-	if err != nil {
-		return comment.Comment{}, err
-	}
+	// _, err := d.Client.ExecContext(ctx, "SELECT pg_sleep(16)")
+	// if err != nil {
+	// 	return comment.Comment{}, err
+	// }
 	row := d.Client.QueryRowContext(
 		ctx, `SELECT id, slug, body, author
 		   FROM comments
@@ -39,7 +39,7 @@ func (d *Database) GetComment(ctx context.Context, uuid string) (comment.Comment
 		uuid,
 	)
 
-	err = row.Scan(&cmtRow.ID, &cmtRow.Slug, &cmtRow.Body, &cmtRow.Author)
+	err := row.Scan(&cmtRow.ID, &cmtRow.Slug, &cmtRow.Body, &cmtRow.Author)
 
 	if err == sql.ErrNoRows {
 		return comment.Comment{}, fmt.Errorf("comment not found")
@@ -79,7 +79,7 @@ func (d *Database) PostComment(ctx context.Context, cmt comment.Comment) (commen
 		return comment.Comment{}, fmt.Errorf("failed to insert comment: %w", err)
 	}
 	if err := rows.Close(); err != nil {
-		return comment.Comment{}, fmt.Errorf("failed to close rows: %w", &err)
+		return comment.Comment{}, fmt.Errorf("failed to close rows: %w", err)
 	}
 
 	return cmt, nil

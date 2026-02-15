@@ -23,7 +23,7 @@ services:
       DB_PASSWORD: postgres
       DB_DB: postgres
       DB_HOST: db
-      DB_TABLE: postgres
+      DB_NAME: postgres
       DB_PORT: "5432"
       SSL_MODE: disable
     ports:

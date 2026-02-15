@@ -16,7 +16,7 @@ func (d *Database) MigrateDB() error {
 
 	driver, err := postgres.WithInstance(d.Client.DB, &postgres.Config{})
 	if err != nil {
-		return fmt.Errorf("could not create the postgres driver: %w", &err)
+		return fmt.Errorf("could not create the postgres driver: %w", err)
 	}
 	m, err := migrate.NewWithDatabaseInstance(
 		"file:///migrations",

@@ -4,6 +4,7 @@ tasks:
   build:
     cmds:
       - go build -o app cmd/server/main.go
+
   test:
     cmds:
       - go test -v ./...
@@ -15,3 +16,20 @@ tasks:
   run:
     cmds:
       - docker-compose up --build
+
+  integration-test:
+    cmds:
+      - docker-compose up -d db
+      - go test -tags=integration -v ./...
+    env:
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DB_HOST: localhost
+      DB_PORT: "5432"
+      DB_NAME: postgres
+      SSL_MODE: disable
+
+  acceptance-tests:
+    cmds:
+      - docker-compose up -d --build
+      - go tests -tags=e2e -v ./...
